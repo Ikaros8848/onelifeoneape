@@ -1,0 +1,5 @@
+numpy>=2.0
+pillow>=10
+scikit-learn>=1.5
+torch>=2.0
+torchvision>=0.15

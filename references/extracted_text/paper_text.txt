@@ -1,0 +1,529 @@
+On-Sensor Binarized Fully Convolutional Neural Network for Localisation and
+Coarse Segmentation
+YananLiu1,2,YaoLu2
+1SchoolofMicroelectronics,ShanghaiUniversity,Shanghai,China,yanan.liu@ieee.org
+2VisualInformationLaboratory,UniversityofBristol,Bristol,UK,yl1220@bristol.ac.uk
+Abstract architectures, integrating sensing, storage, and computing
+onasinglesiliconchip(Fig.1)[4,13]. Suchintegrationop-
+Current neural networks are compatible with high- timisesdatamovementsinthesystem,promisinghighper-
+performance GPU/CPUs. However, implementing neural formanceandlow-powerconsumption,butrequirescareful
+networks on emerging embedded sensor for inference is algorithmimplementation,inordertoefficientlyutilisethe
+challenging due to sensor’s unique hardware architecture hardwareresourcesavailableinanon-sensorcomputingde-
+and stringent computing resources. With this in mind, this vice.
+work presents new methods to implement fully convolu- Networks with binary weights and activations are diffi-
+tional neural networks (FCNs) on Pixel Processor Array culttotrainandusuallysufferfromperformancedropwhen
+(PPA)sensorswithmanytechniquestofullyusethelimited compared to their floating-point equivalent. Use of batch
+resourcesonsensor. Specifically, we, forthefirsttime, de- normalisation has been proposed to avoid gradient explo-
+sign and train binarized FCN for both binary weights and sionandtrainbinarizedneuralnetworkssuccessfully[29].
+activationsusingbatchnorm,groupconvolution,andlearn- In this work we introduce batch normalisation into bina-
+able threshold for binarization, producing networks small rized FCNs to improve the training efficiency and the per-
+enoughtobeembeddedonthefocalplaneofthePPA,with formance of inference on PPA arrays. We implement a
+limitedlocalmemoryresources,andusingparallelelemen- purely binary convolutional network containing both bina-
+tary add/subtract, shifting, and bit operations only. We rized weights and activations. The use of binary activa-
+demonstrate the first implementation of an FCN on a PPA tions alleviates accumulative errors introduced by approx-
+device, performing three convolution layers entirely in the imate computations used to perform image convolutions
+pixel-level processors. We use this architecture to demon- uponPPAhardwaredevices[11]. Thiserrormitigational-
+strateinferencegeneratingheatmapsforobjectsegmenta- lows our approach to perform deeper networks than previ-
+tion and localisation at over 280 FPS using the SCAMP-5 ouswork[2,3,20]whollyuponthefocalplanewithouten-
+PPAvisionchip. counteringanincreasinglossofaccuracythatwouldoccur
+otherwise. Furthermore, it is noted that the implementa-
+tionofthebatchnormalisation,thesignactivationfunction,
+and learnable activation threshold for binarized activations
+1.Introduction
+is equivalent to adding a bias matrix to the layer activa-
+Fully convolutional neural networks (FCN) have been tions, which significantly simplifies the inference process
+used across many modern computer vision tasks such as on sensor. With this binarized FCN, the inference calcu-
+object detection [10], classification [14] and segmentation lation process can be implemented entirely with efficient
+[18,25]. However,thedeploymentofdeepFCNusuallyre- add/subtract, threshold, and shifting operations for all lay-
+liesonpowerfulGPU/CPUswhicharetypicallynotpresent ers. This scheme specifically benefits PPA computing de-
+in emerging embedded edge devices, where cost and en- vices such as the one shown in Fig. 1 because it matches
+ergy considerations dictate stringent limits on storage and thesimpleinstructionsetofthesedevices,andreducesthe
+computingresources. Despitethis,thereisaneverincreas- impact of calculation errors caused by noise accumulation
+ingdemandforartificialintelligenceonsuchedgedevices. whenusinganalogueregisters(AREG)forstorageandcal-
+Onepromisingapproachtotheedgecomputinghardwareis culations, especially for activations. For experiments, we
+represented by Pixel Processor Arrays (PPA). Unlike con- trainbinarizedFCNanddeployitonthePPAforobjectlo-
+ventionalvisionsystems,whichconsistofseparatesensing calisationandcoarsesegmentation.
+andcomputinghardware,PPAdevicesareemergingvision On-Sensor Computing and the SCAMP-5d Vision Sys-
+3629
+TTeexxtt
+(a) (b)
+Figure1.(a)HardwarearchitectureofthePixelProcessorArray(PPA)usedinthiswork.TheSCAMP-5cameraisbasedonaPPAvision
+chipwith256×256ProcessingElements(PE),whicharesimpleprogrammableprocessorcoreswhereparallelimageprocessingiscon-
+ductedbydirectlyoperatingonanaloguesignals(e.g.electriccurrentfromphotodetectorPIX,whichisproportionaltothelightintensity)
+withinanalogueregisters(AREG)andbitoperationswithindigitalregisters(DREG).(b)Theultra-compressedsensingcapabilitieswith
+×32,000datareductionandalowoperationpoweronPPAusingtheproposedFCNfor2Dlocalisation.
+tem: Theconceptofon-sensorcomputingoriginatesfrom ofthePPAareproposed. 3)Unlikeearlierwork,weapply
+emergingnovelcircuitdesignsthatenabledirectsignalpro- batchnormalisationduringtrainingandutilisethistolearn
+cessingonthesensingchip[32]. TheSCAMPvisionsen- biasparameterstobeeasilyappliedduringinferenceonthe
+sor[6]usedinthisworkisbasedonaPPAconceptimple- PPA device. 4) We provide the first demonstration of ob-
+mentedusingmixed-signalanalog/digitaldatapath(Fig. 1), ject localisation and coarse segmentation tasks on a PPA,
+otherdevicessuchasSONYIMX5001 orAistormMantis2 with previous works being only concerned with classifica-
+integrate sensing and computing resources in a single de- tiontasks.
+viceusingalternativestrategies.Ourworktakesadvantages
+oftheSCAMPanalog/digitalPPAtoefficientlyimplement 2.RelatedWork
+abinarizedFCN.AsshowninFig. 1,eachsensingelement
+converts light into analogue signals that are immediately The SCAMP vision sensor has been demonstrated in
+processedonthefocalplane. Unlikethehardwarearchitec- several applications in the field of robotics [16,17,21,27]
+tureofstandardcomputervisionsystems,thePPAdoesnot and computer vision [1,5,26]. Recent work for PPAs has
+involveAnalogue-Digital-Conversion(ADC)aftersensing. concentrated on CNNs and demonstrated on classification
+Insteaditdirectlyoperatesonanalogueelectriccurrents,in tasks [2,3,20]. However we found no previous PPA work
+physicalproximitytotheimagesensorpixelcircuits,accel- onFCNswhichareimportantforfurthertaskslikelocalisa-
+eratingthesignalprocessingandavoidingthebottleneckof tion and segmentation. The research on CNN implemen-
+ADC and data transmission process to external processor tation and inference within PPA was pioneered by Bose
+units. However,suchanalogueprocessingintroduceserrors et al. [2] where a CNN with a single convolutional layer
+intothecomputationanddataispronetonoiseandtemporal wasimplementeduponthePPAarrayandafully-connected
+decay[11].Fig.1bshowsthedataextractioncapabilitiesof layer upon its controller chip. Their work performs 16-
+the PPA based on the proposed FCN, effectively reducing bit image convolution operations using 4×4 DREG ‘Su-
+images of thousands of pixels to specific contextual infor- per Pixel’ blocks and demonstrates live digit classification
+mationwithinatinynumberofbits. based on MNIST dataset at speed of around 200 frames
+Contributions:Themaincontributionsofthisworkare:1) per second (FPS). To fully take advantage of PPA’s paral-
+Wepropose,train,anddemonstratetheuseofapurelybina- lelcomputingcharacteristicsandfurtherimprovetheCNN
+rizednetwork(bothbinaryweightsandactivations)specif- inferenceefficiency,Boseetal.[3]proposedtheideaofin-
+ically for PPAs. This approach of binary activations ad- pixel weight storage, where the network’s weights are di-
+dressestheaccumulationofanaloguecomputingerrorsand rectlystoredwithintheregistersofthePPA’sprocessingel-
+valuesaturation aftereach layer, thus enablingdeeper net- ements. Thisenabledbothparallelcomputationofmultiple
+works while maintaining performance. 2) We present the convolutions,andimplementationofafullyconnectedlayer
+firstimplementationofanFCNarchitectureforPPAs. New upon the PPA array resulting in a ×22 faster CNN infer-
+methods for group convolutional layers [30] and hundreds ence(4464FPS)onthesamedigitrecognitiontask. Based
+ofconvolutionalfilterweightsstorageuponthefocalplane onthesetwoworks,Liuetal.[20]furtherproposedahigh-
+speedlightweightneuralnetworkusingBinaryConnect[8]
+1https://developer.sony.com/develop/imx500/ with a new method for computing convolutions upon the
+2https://aistorm.ai/mantis-2/ PPA,allowingforvaryingconvolutionalstride. Theirwork
+3630
+Figure2. (a)ThebinarizedCNNforwardpropagationwithbatchnormandlearnableactivationfunction. (b)Thesimplifiedinference
+process on the PPA device by transforming batch norm and activation function into a ’bias’ B to be subtracted from Y. The inference
+processissignificantlysimplified,withonlyaddition/subtractionandsignoperationsrequired.
+demonstrated four different classification tasks with frame
+(cid:40)
+ratesrangingfrom2,000to17,500FPSwithdifferentstride +1 w r >0,
+w =sign(w )= (1)
+setups. Basedontheirnetwork,adirectservocontrolusing b r −1 otherwise
+real-timeCNNinferenceresults[23]andasimulatedrobot
+(cid:40)
+tracking from a drone [22] with on-sensor CNN comput- +1 a r >α,
+a =sign(a −α)= (2)
+ingresultsarepresented. Moreover,AnalogNet[31]imple- b r −1 otherwise
+mentsconvolutionwithvalueapproximationformultiplica-
+where w is floating-point weights and w is the bina-
+tiononthefocalplaneusing3kernelsandfully-connected r b
+rized weights. In terms of activations, we train channel-
+layer on the micro-controller based on the MNIST. Differ-
+wise learnable thresholds α to binarise the activations to
+entfromabove-mentionedworks,thispaperadvancesstate-
+obtain more informative binary feature maps, inspired by
+of-the-art in neural network methods on PPA. We propose
+work[24]. Additionalcoefficients, introducedbychannel-
+a new FCN network architecture suitable for PPA imple-
+wisethresholds,havelowimpactontheimplementationef-
+mentation,includingthreeconvolutionallayerswithbinary
+ficiency on the PPA. In Eq.2, α is the trainable thresholds
+weightsandbinaryactivations. Thenetworkfirstlyutilises
+forbinarizationofeachchannel,a isthereal-valuedactiva-
+groupconvolutionandistrainedusingbatchnormalisation, r
+tionsanda isthebinarizedactivations.Duringthetraining
+andenablesnewsegmentation-relatedapplications. b
+process,usingstandardbackpropagationandstochasticgra-
+dientdescent,thegradientsarecalculatedwiththefloating-
+3.Method point weights. The weights and activations are only bina-
+rizedduringforwardpass. Inourwork,theBinarizedCNN
+NeuralnetworkarchitecturesforPPAsmustbecarefully istrainedonaPCmachineandtheCNNinferenceprocess
+designed taking into account model size, architecture, and isimplementedontheSCAMP-5dvisionsystem.
+thefeasibilityofexploitingthePPA’sparallelcomputation The training process for batch norm parameters can be
+and on-sensor storage. This is essential due to the limited seen from [19] Algorithm 1, in which ϵ is used to avoid a
+on-sensor resources compared to standard computer hard- zerodenominatorandthemainscalingandshiftingparam-
+warewhichmayhaveaccesstopowerfulGPU/CPUs. This etersγandβforbatchnormarelearnedduringthetraining
+sectionattemptstofindabalancebetweenthenetworkper- process. Thenthebatchnormcanbeappliedtomanipulate
+formanceanditsimplementationonthePPA. activations [19]. In Fig. 2, for a single layer of Binarized
+CNNduringforwardpropagationprocess:
+3.1.CNNwithBinaryWeightsandActivations
+m
+TheneuralnetworktraininginourworkisbasedonBi- Y = (cid:88) w i x i ,Yˆ =γ√ Y −µ +β
+σ2+ϵ
+narized CNN [9], with binary weights and neuron activa- i=0 √ (3)
+tions,whichcanbestoredandprocessedwithbit-wiseop- γ σ2+ϵ
+= √ (Y −(µ− β))
+erations. ComparedtoBinaryConnect, BinarizedCNNre- σ2+ϵ γ
+ducestheintermediatememorystorageforactivationsand
+Considering activation function tanh does not change the
+replaces most arithmetic operations with bit-wise opera-
+signofinputs,wehave:
+tions. Such fully binarized networks are thus highly suit-
+ableforPPAsduetotheirsmallmemoryfootprint. Forthe
+Z =sign(A)=sign(tanh(Yˆ −α))=sign(Yˆ −α)
+forward propagation, we take different strategies to bina-
+√
+risetheweightsandactivationstosimplifythebinarization σ2+ϵ
+=sign(Y −(µ− β)−α)
+process. Alltheweightsarebinarizedwithadeterministic γ
+functionEq.1 (4)
+3631
+1. Convolution
+1. Convolution 1. Convolution(128 4x4
+(64 1x1 filters)
+(16 4x4 filters) filters, group = 8) feature map
+2. Batch Norm
+2. Batch Norm 2. Batch Norm shifting and addition
+3. ReLU
+3. Binarization 3. Binarization outputs:1x64x64
+4. Maxpooling(2x2)
+outputs: 16x64x64 outputs: 64x64x64
+outputs:64x64x64
+Figure 3. An overview of an on-sensor FCN architecture and inference process using a PPA for heat map generation. A three-layer
+FCNarchitectureisusedinourwork. ThefirstconvolutionallayercanbeseenfromFig. 6indetail. Inthesecondconvolutionallayer,
+128convolutionalkernelfiltersareapplieduponthe16inputbinaryfeaturemapsfromthefirstlayer,generating64featuremapswitha
+convolutiongroupsetupofeight. Thefusionofintermediateextractedfeaturesisimplementedbyadditionwithineachgroup. Thethird
+layerusesbinaryfilterswithasizeof64×1×1,hencethefinalfeaturemapscanbeobtainedby’multiplication’withbitoperationbased
+onDREG.Thefinalheatmapisgeneratedbycombiningtheseinput64featuremapsbyshiftingandadditionoperations.
+√ finalheatmaprepresentingthepredictionprobabilitydistri-
+σ2+ϵ
+Z =sign(Y −B) (5) B=µ+α− β (6) bution,takingthese64binaryfeaturemapsandcombining
+γ
+In Equation 6, σ2 = 1 (cid:80)n (x −µ)2,µ = 1 (cid:80)n x , themwithinanAREG.Eachbinaryfeaturemapbeingmul-
+n i=1 i n i=1 i
+where β, γ, and α are all trainable parameters that can tipliedbyanassociatedweightof-1/1.
+be obtained directly after training. Thus the ’bias’ B
+3.3.FCNImplementationonthePPA
+can be calculated used these parameters offline, before
+implementingitonthePPA.Duringtheinferenceprocess, Thissectiongivestheimplementationdetailofthebina-
+the batch norm and activation reduces to a bias term, as rizedFCNonthePPAsensorhardware.
+showninEquation5BonY.Hence,theinferenceprocess FirstLayer: 16binaryfiltersarereplicatedtofillaDREG
+onthePPAcanbesimplifiedasshowninFig. 2b. (Fig. 7) for parallel convolution purpose [3,20]. Fig. 5
+showstheimageconvolutionprocessonthePPA.Theim-
+ageconvolutiononthePPAcanbedecomposedas’multi-
+3.2.FCNarchitectureonsensor
+plications’,shiftingandadditionandtheconvolutionresult
+FCNisaCNNarchitectureprovidingpixel-levelclassifi- isobtainedbyperformingshiftingandadditionprocessfor
+cation,targetingimagesegmentation[25].Thispaperfirstly 16 times with a stride = 1. Then the pre-calculated bias B
+proposesa3-convlayerFCNthatcanbeimplementedona isplottedinto4×4gridsonaAREGandissubtractedfrom
+PPA sensor. In this paper, FCN is used for heat map gen- the feature map (seen in Fig. 6 ). Then the output binary
+eration by adding one convolutional layer with 128 filters imageisobtainedbybinarizingfeaturemapaftersubtract-
+andreplacingthefinalfully-connectedlayerwithaconvo- ingB.Inthislayer,tanhisusedastheactivationfunction.
+lutionallayerofkernelsize1×1. Fig. 3showstheoverall When implementing inference on sensor, the tanh activa-
+FCNarchitecturewithconfigurationsforeachlayer. Fig. 6 tion function is transformed into binarisation with a sign
+illustrates the first convolution layer, generating 16 binary function,withoffsetcomputedfrombatchnormparameters
+featuremaps. Thesecondlayeradoptsgroupimageconvo- ascanbeseenfromEq. 4. Thislayersharessomesimilar-
+lution[7]of8ontheinput16featuremapstomakeatrade ity with work [20] including the image resize, replication,
+off between convolution computation complexity and net- andimageconvolutionbutwithextraactivationbinarization
+work performance, where each of 64 outputs is generated process.
+by adding two intermediate feature maps (Fig. 9). These SecondLayer: Groupconvolutionisanadvantageousap-
+64binaryfeaturemapsfromthesecondconvolutionallayer proachforembeddeddevicesduetothereducednumberof
+are stored in 4 DREG. The third layer then generates the parameters generated by group computing. It is, however,
+3632
+Image shift right active area Image shift down Image shift down Image right and addition heat map
+addition addition addition
+Figure4.Featuremapshiftingandadditionprocess:thefinalheatmapisgeneratedbyaddingthefeaturemapsfromthethirdlayer.
+Figure5.ImageconvolutiononPPAwithsigninversion,bit-shifting,andaddition.
+Activated and replication
+32
+16
+1 2
+3 4 256X8
+5 6
+7 8
+Layout of 128 (8x16) kernel filters Layout of 16 kernel filters after parallel
+replicating to fullfill each 64x64 block
+Figure 8. Left: The layout of 8 filers in a block of size 64×64.
+Each4×4filterisreplicatedandstoredwithina16×32PEblock.
+Middle:Thelayoutof128kernelfiltersstoredinoneDREG.Be-
+fore performing a convolution operation (8 times in total) in the
+Figure6.FirstconvolutionallayeroftheFCN. 2ndlayer, eachsetofkernels(yellowblocksareforoneset, for
+instance)arereplicatedtofullyfilleach64×64block(right),cov-
+eringthewhole256×256PEarraywith16replicatedfilters.
+parallel,shifted,andreplicatedtofilleach64×64blockin
+256×256PEs. Thisfilterstoragestructurecanalsoextend
+tostoremorefiltersfollowingthesimilarwaytofillallPEs
+with16filters. InFig. 9,toimplementsecondconvolution
+layer with 8 groups, the input 16 binary feature maps are
+first transformed by switching position of adjacent maps.
+This is followed by convolution with associated 32 filters
+forthese32featuremaps. Then16gray-scalefeaturemaps
+Figure 7. The layout of 16 binarized convolutional kernels in a
+areobtainedbyaddingeachtwoof32maps. Byperform-
+DREGforthe1stlayer.
+ingconvolutionforanother96filters,64gray-scalefeature
+mapscanbederived. Thebiasmatrixissubtractedandthen
+afterbinarization,64binaryfeaturemapsaregenerated.
+difficulttoimplementinparallelontheuniquehardwarear-
+chitectureofthePPA.Thekeytothesecondlayeristoim- Third Layer: In this layer, as shown in Fig. 3, 64 1-bit
+plementthegroupconvolutionwith16featuremapsasin- filtersareplottedonaDREG,followedby’multiplication’
+putsand64asoutputs. Bydividingthemintoeightgroups, with the 1-bit feature maps from the previous layer. After
+thusthereare128binaryfiltersneedtobestoredonsensor. 1×1convolution,these64featuremapsin4DREGisre-
+Thelayoutoffiltersdirectlyaffectstheinferenceefficiency. locatedto1AREGafter2×2maxpooling. Thesummation
+Wedesignastoragestructureforfiltersinfirst(Fig. 7)and of these extracted feature can be obtained by shifting and
+second layer. Fig. 8 illustrates the layout of these filters addingintoone64×64heatmap(showninFig. 4). Unlike
+withinoneDREG.Ascanbeseen, eachtimetoperforma in the previous two layers, the activation function for this
+convolution,thecorrespondingkernelfiltersareactivatedin layer is ReLU to generate a gray-scale feature map as the
+3633
+16 binaryfeature maps
+1 2 3 4 k1_1k2_2k3_9k4_10 group conv for x4
+16 feature maps
+5 6 7 8 k5_17k6_18k7_25k8_26
+*
+9 10 11 12 k9_33k10_34k11_41k12_42
+13 14 15 16 k13_49k14_50k15_57k16_58 1 2 9 10 3 4 11 12 5 6 13 14 7 8 15 16
++ = 17 18 25 26 19 20 27 28 21 22 29 30 23 24 31 32
+2 1 4 3 k2_1k1_2k4_9k3_10 33 34 41 42 35 36 43 44 37 38 45 46 39 40 47 48
+6 5 8 7 k6_17k5_18k8_25k7_26 49 50 57 58 51 52 59 60 53 54 61 62 55 56 63 64
+10 9 12 11 * k10_33k9_34k12_41k11_42 conv results final generated 64 feature maps
+14 13 16 15 k14_49k13_50k16_57k15_58
+corresponding
+transformed filters
+feature maps
+convolution feature fusion by addition feature transform binarization
+16 binary
+feature
+maps
+128 filters 128 intermediate feature maps 64 feature maps Bias matrix 64 binary feature
+maps
+Figure9.GroupconvolutiononthePPAforthe2ndlayer.Top:schematicdiagramofgroupconvolution.Numberswithingridsrepresent
+theindexoffeaturemapsandfilterlayout. Bottom: groupconvolutiononsensor. 128convolutionalkernelfiltersareappliedon16input
+binaryfeaturemaps(farleft),generating64featuremapsbyaddingeachtwoof128intermediatemaps.Thenthese64mapsaresubtracted
+bybiasmatrix,followedbyabinarization. Finally,64binaryfeaturemapsareobtainedforthenextlayer. Moredetailscanbeseenfrom
+thesupplementarypdf.
+finalpredictionresultofthenetwork. Task IoU
+Roadsegmentationonsimulation(Computer) 74.0%
+4. SCAMP-5 Inference, Experiments, and Roadsegmentationonsensor(PPA) 69.3%
+Evaluation
+Grasssegmentationonsimulation(Computer) 76.6%
+Grasssegmentationonsensor(PPA) 72.9%
+This section demonstrates the application of the pro-
+posednetworkarchitecturetocoarsesegmentationandob-
+ject2Dlocalisationfromabird’seyeview. Weimplement
+Table 1. Intersection over Union (IoU) performance compari-
+the FCN algorithm on the SCAMP vision system hard-
+sonbetweensimulationoncomputerandexecutionon-sensorfor
+ware (Fig. 10). We set up a realistic environment in We-
+coarsesegmentation.
+bots [28] robot simulator (Fig. 11) for data collection and
+thevalidationofFCNdeploymentonsensor. Training,test-
+ingandvalidationdatasetsarecollectedbyrepeatedlytak-
+aroadandgrasscoarsesegmentationisexploredinthissec-
+ing images from a flying drone equipped with a simulated
+tion. As shown in Fig. 11, we directly use the road/grass
+”SCAMP” and then validation images are sent to the PPA
+shape as the ground truth for coarse segmentation. Notice
+hardware for inference. Binarized FCN is trained offline
+thatthetreesandgrassareasoftensharesimilargray-scale
+basedonthesedatasetswiththemethodproposedinSection
+levelswiththeroad,makingcoarsesegmentationunfeasible
+3. Thewholeneuralnetworkforbothcoarsesegmentation
+bysimplyusingbinarythresholding.Tab.1showstheInter-
+andlocalisationisperformedonsensor.
+sectionoverUnion(IoU)performancecomparisonbetween
+FCN inference on simulation and on sensor. Specifically,
+4.1.CoarseSegmentation
+IoUismeasuredherebycountingthenumberofintersected
+Fig. 11showsthesamplesofcollecteddatasetsandtheir pixels over the number of united pixels of the predictions
+annotationsforsegmentationofroadandgrass. Tovalidate and groundtruth. In addition, Fig. 13 compares the FCN
+theperformanceoftheproposednetworkondifferenttasks, training process for segmentation task between using and
+3634
+Images captured from a flying drone
+USB
+PPA
+FCN being
+calculated on A real SCAMP
+sensor vision system
+Robot simulation environment
+Figure10.ExperimentalsetupsusingarobotsimulatorandarealSCAMPvisionsystemwheretheneuralnetworksarefullycomputedon
+thePPA.
+Figure 12. FCN inference results on-sensor. Left column is the
+inputgray-scaleimageonsensorwithyellowdotsindicatingthe
+Figure 11. The data collection environment where a vehicle is FCNinferencelocalisationpredictionandrightcolumnisthein-
+movingaroundandimagesaregeneratedfromabird’seyeview ference results for coarse segmentation on sensor. The density
+of a drone. Top left: A robot simulator for environment setup anddistributionofcolourfulpoints(right)representthepossibil-
+andcollectionoftrainingdata. Middleleft: Thecollectedimages ityofpositionoftheroad(brightyellow)andgrass(green)seg-
+fromthedrone’scameraareconvertedintogray-scaleimagesfor mentation. Theexperimentalperformanceforlocalisation(accu-
+thePPAandthesegmentationannotationsoftheroad.Right:The racy) and segmentation (IoU) on the PPA can be seen from Fig.
+training and annotated datasets for grass segmentation. Bottom 14. andTab. 1. Experimentalvideo: https://vimeo.com/
+left: thisworkusestheGaussiandistributiontorepresenttheve- 636976542
+hiclepositionwithinanimage.
+notusingbatchnorm,whichshowsthebinarizedFCNdose
+not converge without batch norm, justifying its use here.
+Some of the results can be seen from Fig. 12. Tab. 1
+compares the experimental results on sensor and its coun-
+terpartbaselineoncomputerwithidenticalneuralnetworks
+andvalidationimages.
+4.2.ObjectDetection
+Wealsoimplementedanobjectdetectiontask,basedon
+theheatmap. Asfortheobjectlocalisation,ratherthanus-
+ingthevehiclesegmentationimageasthegroundtruthfor Figure 13. Training process comparison for grass segmentation
+training,weuseGaussianpositiondistribution(Fig. 11)as withandwithoutbatchnorm.
+the ground truth since the probability distribution is ade-
+quate to represent the object 2D localisation. For the vali- weighted sum of all the possible positions. After the test,
+dation,adistancethresholdissetfrom0to63tocountthe within a distance of 10 pixels, the vehicle localisation ac-
+number of predictions with a distance to the groundtruth curacyforsimulationandSCAMPisaround88%and83%
+that falls into this threshold. A zero distance means a per- respectively(Fig. 14). Tab. 2showstheFCNperformance
+fect prediction. The final localisation is obtained by the intermsoftime,powerconsumptionandmodelsize.
+3635
+4.3.Pupildetection
+ProcessingSteps TimeCost(µs)
+Imagereplication 112 Considering the light weight and low-power consump-
+1stImageconvolution 184 tionofthePPAchipandtheincreasingpopularityofvirtual
+1stBatchnormandactivation 235 and augmented reality (VR/AR) based on the eye move-
+kernelfilteractivationandreplication 212 ment, it is promisingto mount the PPA chip to a wearable
+2ndGroupconvolution 184×4=736 devicesuchasglassesinthenearfuture,henceweexplore
+2×2maxpooling 35×4=140 thepupildetectionwiththeproposedbinarizedFCNbased
+2ndBatchnormandactivation 235×4=940 on the public dataset of eye images: TEyeD [15]. Fig. 15
+Thirdconvolutionallayer 966 shows some of the training images and their annotations
+and Fig. 16 shows results comparison between SCAMP
+Totaltimecost 3525(283FPS)
+andsimulationinference,wheretheaccuracycurveisplot-
+numberofweights 2,578
+ted according to the Euclidean distance between simula-
+powerconsumption ≈1.5W
+tion/scamp inference results and the groundtruth. Within
+modelsize ≈0.31KB
+adistanceof10pixels,thelocalisationaccuracyforsimula-
+tionandscampisaround88%and83%respectively. More
+Table2.Computationtime,performanceandweightsforheatmap experimentalvideoscanbeshownundertherequirementof
+generationwiththebinarizedFCNonsensor.
+reviewersinananonymousmanner.
+Noticethatthereisaround5%-6%performancegapfor
+theexperimentonsensorcomparedtothesimulation. This
+is due to noise in the convolution operation performed on
+AREG because of the inherent non-idealities of analogue
+computation [12] and some random bit-flipping errors ob-
+servedinDREGwhenperformingmassivelyparallelshift-
+ingandreplications. Mitigationoftheseissuesrequiresfur-
+thersoftwareorhardwaresolutions. Inthiswork,wetried
+tofindabalancebetweennetworkcomplexityandviability
+fordeploymentupontheavailablePPAprototypehardware.
+Pixel-wise accurate segmentation, with a quality equal to
+onethatcanbeobtainedusingaCPU/GPUshardware,us-
+Figure 14. Performance comparison between simulation and on ingembeddedlow-powerSCAMP-5dvisionsystem,isstill
+sensorforlocalisationtask. a challenging task with current hardware and neural net-
+workarchitecture.
+5.ConclusionandFutureWork
+On-sensor computing is important for embedded and
+low-lag, low-power vision systems. Due to their compact-
+ness and computational advantages, binary FCNs are in-
+creasingly appealing. In this paper, we propose and im-
+Figure15. Selectionofpupilimages(Left)andtheirannotations
+plement a new method that demonstrates carrying out an
+(Right)fromTEyeDdatasets.
+inferencewithabinarizedFCNonanon-sensorcomputing
+device. In contrast to previous works that have mainly fo-
+cusedonclassificationwithafully-connectedlayer,we,for
+the first time, exploit the FCN architecture design, imple-
+mentation method, and inference on sensor. We validate,
+using a real pixel processor array (PPA) hardware, on the
+visual competences of region segmentation and target ob-
+Figure16.SelectionofinferenceresultscomparisonbetweenFCN
+withoff-sensorsimulation(top)andon-sensorPPA(bottom).The jectlocalisationwithalatencyof3.5millisecondsforeach
+reddotatthebottomleftofeachframeisthefinalpositionpre- inference.Withthedevelopmentoffuturegenerationofon-
+dictioncalculatedfromtheheatmapontheright. Experimental sensordevicesintermsofimageresolution,manufacturing
+video:https://vimeo.com/636978456 techniques,andlocalmemorycapacity,webelieveourpro-
+posedbinarizedFCNcanbeextendedwithextralayersfor
+morechallengingapplications.
+3636
+References ageryusingafullyconvolutionalnetwork. RemoteSensing,
+9(5):498,2017. 1
+[1] Laurie Bose, Jianing Chen, Stephen J Carey, Piotr Dudek,
+[15] Wolfgang Fuhl, Gjergji Kasneci, and Enkelejda Kasneci.
+andWalterioMayol-Cuevas. Visualodometryforpixelpro-
+Teyed: Over 20 million real-world eye images with pupil,
+cessorarrays.InProceedingsoftheIEEEInternationalCon-
+eyelid, and iris 2d and 3d segmentations, 2d and 3d land-
+ferenceonComputerVision,pages4604–4612,2017. 2
+marks, 3d eyeball, gaze vector, and eye movement types.
+[2] LaurieBose, JianingChen, Stephen J.Carey, PiotrDudek,
+arXivpreprintarXiv:2102.02115,2021. 8
+andWalterioMayol-Cuevas. Acamerathatcnns: Towards
+[16] ColinGreatwood,LaurieBose,ThomasRichardson,Walte-
+embedded neural networks on pixel processor arrays. In
+rioMayol-Cuevas,JianingChen,StephenJCarey,andPiotr
+ProceedingsoftheIEEE/CVFInternationalConferenceon
+Dudek. Trackingcontrolofauavwithaparallelvisualpro-
+ComputerVision(ICCV),October2019. 1,2
+cessor.In2017IEEE/RSJInternationalConferenceonIntel-
+[3] Laurie Bose, Piotr Dudek, Jianing Chen, Stephen J Carey,
+ligentRobotsandSystems(IROS),pages4248–4254.IEEE,
+andWalterioWMayol-Cuevas. Fullyembeddingfastcon-
+2017. 2
+volutionalnetworksonpixelprocessorarrays. InEuropean
+[17] ColinGreatwood,LaurieBose,ThomasRichardson,Walte-
+Conference on Computer Vision, pages 488–503. Springer,
+rio Mayol-Cuevas, Jianing Chen, Stephen J Carey, and Pi-
+2020. 1,2,4
+otr Dudek. Perspective correcting visual odometry for ag-
+[4] StephenJCarey,AlexeyLopich,DavidRWBarr,BinWang,
+ile mavs using a pixel processor array. In 2018 IEEE/RSJ
+and Piotr Dudek. A 100,000 fps vision sensor with em-
+InternationalConferenceonIntelligentRobotsandSystems
+bedded 535gops/w 256× 256 simd processor array. In
+(IROS),pages987–994.IEEE,2018. 2
+2013SymposiumonVLSICircuits,pagesC182–C183.IEEE,
+[18] Vladimir Iglovikov, Selim Seferbekov, Alexander Buslaev,
+2013. 1
+andAlexeyShvets. Ternausnetv2: Fullyconvolutionalnet-
+[5] Jianing Chen, Stephen J Carey, and Piotr Dudek. Feature workforinstancesegmentation. InProceedingsoftheIEEE
+extractionusingaportablevisionsystem. InIEEE/RSJInt. Conference on Computer Vision and Pattern Recognition
+Conf.Intell.RobotsSyst.,WorkshopVis.-basedAgileAuton.
+Workshops,pages233–237,2018. 1
+NavigationUAVs,2017. 2
+[19] Sergey Ioffe and Christian Szegedy. Batch normalization:
+[6] JianingChen,StephenJCarey,andPiotrDudek. Scamp5d Acceleratingdeepnetworktrainingbyreducinginternalco-
+visionsystemanddevelopmentframework. InProceedings variateshift. arXivpreprintarXiv:1502.03167,2015. 3
+of the 12th International Conference on Distributed Smart
+[20] YananLiu,LaurieBose,JianingChen,StephenJCarey,Pi-
+Cameras,pages1–2,2018. 2
+otr Dudek, and Walterio Mayol-Cuevas. High-speed light-
+[7] Franc¸oisChollet. Xception: Deeplearningwithdepthwise weightcnninferenceviastridedconvolutionsonapixelpro-
+separable convolutions. In Proceedings of the IEEE con- cessorarray. InThe31stBritishMachineVisionConference
+ference on computer vision and pattern recognition, pages (BMVC2020),2020. 1,2,4
+1251–1258,2017. 4 [21] Yanan Liu, Laurie Bose, Colin Greatwood, Jianing Chen,
+[8] Matthieu Courbariaux, Yoshua Bengio, and Jean-Pierre RuiFan,ThomasRichardson,StephenJCarey,PiotrDudek,
+David. Binaryconnect: Trainingdeepneuralnetworkswith andWalterioMayol-Cuevas. Agilereactivenavigationfora
+binaryweightsduringpropagations. InAdvancesinneural non-holonomic mobile robot using a pixel processor array.
+informationprocessingsystems,pages3123–3131,2015. 2 IETimageprocessing,2021. 2
+[9] Matthieu Courbariaux, Itay Hubara, Daniel Soudry, Ran [22] Yanan Liu, Jianing Chen, Laurie Bose, Piotr Dudek, and
+El-Yaniv, and Yoshua Bengio. Binarized neural networks: Walterio Mayol-Cuevas. Bringing a robot simulator to the
+Trainingdeepneuralnetworkswithweightsandactivations scamp vision system. In 2021 IEEE International Confer-
+constrained to+ 1 or-1. arXiv preprint arXiv:1602.02830, ence on Robotics and Automation (ICRA) workshop: On
+2016. 3 andNear-sensorVisionProcessing,fromPhotonstoAppli-
+[10] Jifeng Dai, Yi Li, Kaiming He, and Jian Sun. R-fcn: Ob- cations.IEEE,2021. 3
+jectdetectionviaregion-basedfullyconvolutionalnetworks. [23] Yanan Liu, Jianing Chen, Laurie Bose, Piotr Dudek, and
+arXivpreprintarXiv:1605.06409,2016. 1 WalterioMayol-Cuevas. Directservocontrolfromin-sensor
+[11] Piotr Dudek. Accuracy and efficiency of grey-level image cnninferencewithapixelprocessorarray. In2021IEEEIn-
+filtering on vlsi cellular processor arrays. In Proc. CNNA, ternationalConferenceonRoboticsandAutomation(ICRA)
+pages123–128,2004. 1,2 workshop: On and Near-sensor Vision Processing, from
+[12] PiotrDudekandPeterJHicks. Ansimdarrayofanalogue PhotonstoApplications.IEEE,2021. 3
+microprocessors for early vision. In Proc. Conf. Postgrad- [24] ZechunLiu, ZhiqiangShen, MariosSavvides, andKwang-
+uateResearchinElectronics,PhotonicsandRelatedFields Ting Cheng. Reactnet: Towards precise binary neural net-
+(PREP’99),pages359–362,1999. 8 work with generalized activation functions. In European
+[13] PiotrDudekandPeterJHicks.Ageneral-purposeprocessor- Conference on Computer Vision, pages 143–159. Springer,
+per-pixel analog simd vision chip. IEEE Transactions on 2020. 3
+CircuitsandSystemsI:RegularPapers,52(1):13–20,2005. [25] JonathanLong,EvanShelhamer,andTrevorDarrell. Fully
+1 convolutionalnetworksforsemanticsegmentation. InPro-
+[14] Gang Fu, Changjun Liu, Rong Zhou, Tao Sun, and Qijian ceedings of the IEEE Conference on Computer Vision and
+Zhang. Classificationforhighresolutionremotesensingim- PatternRecognition(CVPR),June2015. 1,4
+3637
+[26] Julien NP Martel, Lorenz Mueller, Stephen J Carey, Piotr
+Dudek, and Gordon Wetzstein. Neural sensors: Learning
+pixelexposuresforhdrimagingandvideocompressivesens-
+ingwithprogrammablesensors. IEEETransactionsonPat-
+ternAnalysisandMachineIntelligence,2020. 2
+[27] AlexanderMcConville,LaurieBose,RobertClarke,Walte-
+rioMayol-Cuevas,JianingChen,ColinGreatwood,Stephen
+Carey,PiotrDudek,andTomRichardson. Visualodometry
+usingpixelprocessorarraysforunmannedaerialsystemsin
+gps denied environments. Frontiers in Robotics and AI, 7,
+2020. 2
+[28] OlivierMichel.Cyberboticsltd.webots™:professionalmo-
+bile robot simulation. International Journal of Advanced
+RoboticSystems,1(1):5,2004. 6
+[29] Eyyu¨bSari,MouloudBelbahri,andVahidPartoviNia. How
+doesbatchnormalizationhelpbinarytraining.arXivpreprint
+arXiv:1909.09139,2019. 1
+[30] Xijun Wang, Meina Kan, Shiguang Shan, and Xilin Chen.
+Fully learnable group convolution for acceleration of deep
+neuralnetworks. InProceedingsoftheIEEE/CVFConfer-
+enceonComputerVisionandPatternRecognition(CVPR),
+June2019. 2
+[31] Matthew Z Wong, Benoit Guillard, Riku Murai, Sajad
+Saeedi,andPaulHJKelly. Analognet:Convolutionalneural
+networkinferenceonanalogfocalplanesensorprocessors.
+arXivpreprintarXiv:2006.01765,2020. 3
+[32] FeichiZhouandYangChai.Near-sensorandin-sensorcom-
+puting. NatureElectronics,3(11):664–671,2020. 2
+3638

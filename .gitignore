@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.py[cod]
+data/
+artifacts/checkpoints/
+artifacts/samples/
+*.pt
+*.pth
+*.ckpt
+*.npz
