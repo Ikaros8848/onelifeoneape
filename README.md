@@ -55,17 +55,8 @@ python -m scripts.segnet_baseline.train --epochs 3 --samples 512
 
 完整训练通常需要 GPU 和较长时间；首次运行建议先使用较小的 `--epochs`、`--samples` 或 `--max-train` 做冒烟验证。
 
-## 数据与模型文件
 
-以下内容明确排除在 Git 版本库之外：
 
-- `data/`：MNIST、Oxford-IIIT Pet 等数据集
-- `.venv/`：本地 Python 虚拟环境
-- `artifacts/checkpoints/`：训练产生的模型权重
-- `artifacts/samples/`：PGM 等样例输出
-- `*.pt`、`*.pth`、`*.ckpt`、`*.npz`：模型和导出的权重文件
-
-原始 SCAMP-5 C++ 参考代码位于 `original_repo/`，其中的固件权重头文件属于源代码参考的一部分，会随仓库保留。
 
 ## 验证
 
