@@ -1,6 +1,6 @@
 # YSYX 工程说明
 
-本仓库是可直接在 GitHub Codespaces 中打开的工程代码仓库。数据集、虚拟环境、模型权重和临时样例均不上传到 GitHub。
+本仓库提供整理后的工程代码。数据集、虚拟环境、模型权重和临时样例均不上传到 GitHub。
 
 本项目包含三条独立的软件实验线：SCAMP-5/MNIST 基线、二值 FCN 论文基线和 SegNet 对照基线；`original_repo/` 保留原始 SCAMP-5 C++ 参考工程。
 
@@ -19,17 +19,13 @@
 
 ## 运行
 
-### GitHub Codespaces
-
-在 GitHub 仓库页面选择 **Code → Codespaces → Create codespace on master**。容器创建后会自动安装 `requirements.txt` 中的 Python 依赖。
-
-本项目默认从项目根目录下的 `data/` 读取数据。由于数据集不随仓库上传，需要在 Codespace 中自行准备数据，或运行脚本时传入其他数据目录。
-
-### 本地环境
-
-在项目根目录执行：
+### 从 GitHub 克隆并运行
 
 ```powershell
+git clone https://github.com/Ikaros8848/YSYX.git
+cd YSYX
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
 .venv\Scripts\python.exe -m scripts.baseline.run_inference
 .venv\Scripts\python.exe -m scripts.paper_baseline.train --epochs 3 --samples 512
 .venv\Scripts\python.exe -m scripts.segnet_baseline.train --epochs 3 --samples 512
@@ -57,7 +53,7 @@ python -m scripts.paper_baseline.train --dataset synthetic --epochs 3 --samples 
 python -m scripts.segnet_baseline.train --epochs 3 --samples 512
 ```
 
-完整训练通常需要 GPU 和较长时间；Codespaces 中建议先使用较小的 `--epochs`、`--samples` 或 `--max-train` 做冒烟验证。
+完整训练通常需要 GPU 和较长时间；首次运行建议先使用较小的 `--epochs`、`--samples` 或 `--max-train` 做冒烟验证。
 
 ## 数据与模型文件
 
