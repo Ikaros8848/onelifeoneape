@@ -22,7 +22,7 @@
 ### 从 GitHub 克隆并运行
 
 ```powershell
-git clone https://github.com/Ikaros8848/YSYX.git
+git clone https://github.com/Ikaros8848/onelifeoneape.git
 cd YSYX
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
