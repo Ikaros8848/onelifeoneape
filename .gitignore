@@ -8,3 +8,4 @@ artifacts/samples/
 *.pth
 *.ckpt
 *.npz
+artifacts/reports/*_rerun.json
