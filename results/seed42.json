@@ -1,0 +1,254 @@
+{
+  "reference": "seed42",
+  "device": "cuda",
+  "samples": 10000,
+  "models": [
+    {
+      "name": "seed42",
+      "kind": "qat",
+      "checkpoint": "artifacts/checkpoints/mnist_scamp_offset13_seed42.deploy.pt",
+      "task": {
+        "accuracy": 0.9738,
+        "macro_precision": 0.9736347175856542,
+        "macro_recall": 0.9736974867833335,
+        "macro_f1": 0.9736153210999448,
+        "confusion_matrix": [
+          [
+            964,
+            0,
+            2,
+            0,
+            1,
+            4,
+            1,
+            1,
+            7,
+            0
+          ],
+          [
+            2,
+            1119,
+            4,
+            1,
+            2,
+            2,
+            2,
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            1006,
+            4,
+            5,
+            0,
+            0,
+            3,
+            13,
+            0
+          ],
+          [
+            1,
+            0,
+            7,
+            976,
+            0,
+            12,
+            0,
+            1,
+            8,
+            5
+          ],
+          [
+            2,
+            0,
+            6,
+            1,
+            950,
+            1,
+            1,
+            1,
+            4,
+            16
+          ],
+          [
+            0,
+            1,
+            2,
+            10,
+            1,
+            871,
+            1,
+            0,
+            5,
+            1
+          ],
+          [
+            4,
+            2,
+            4,
+            0,
+            1,
+            6,
+            934,
+            0,
+            7,
+            0
+          ],
+          [
+            0,
+            3,
+            10,
+            1,
+            7,
+            2,
+            0,
+            995,
+            2,
+            8
+          ],
+          [
+            3,
+            0,
+            6,
+            1,
+            4,
+            5,
+            0,
+            2,
+            946,
+            7
+          ],
+          [
+            1,
+            1,
+            1,
+            4,
+            12,
+            5,
+            0,
+            5,
+            3,
+            977
+          ]
+        ]
+      },
+      "hardware_proxy": {
+        "name": "seed42",
+        "mapping": "ternary_scamp_proxy",
+        "parameters": 41242,
+        "positive_terms": 389140,
+        "negative_terms": 275528,
+        "active_terms": 664668,
+        "skipped_terms": 424868,
+        "dense_terms": 1089536,
+        "comparisons": 61440,
+        "retained_offsets": 13,
+        "total_offsets": 16,
+        "offset_route_depth": 13,
+        "fc_mask_passes": 20,
+        "external_movement_bits": 148880,
+        "local_movement_elements": 114688,
+        "feature_footprint_elements": 65536,
+        "analog_live_planes": 3,
+        "digital_live_planes": 4,
+        "register_pressure": 0.42857142857142855,
+        "register_excess": 0.0,
+        "latency_proxy": 60.0,
+        "energy_proxy": 811228.4,
+        "assumptions": {
+          "analog_register_planes": 7,
+          "digital_register_planes": 13,
+          "input_bits": 8,
+          "activation_bits": 8,
+          "ternary_bits": 2,
+          "metadata_bits": 16,
+          "base_analog_live_planes": 3,
+          "base_digital_live_planes": 4,
+          "pool_schedule_depth": 4,
+          "energy_add": 1.0,
+          "energy_subtract": 1.0,
+          "energy_compare": 0.5,
+          "energy_local_move": 0.25,
+          "energy_external_bit": 0.01,
+          "energy_register_access": 0.1,
+          "energy_control_stage": 32.0,
+          "latency_tap_stage": 1.0,
+          "latency_shift_stage": 1.0,
+          "latency_pool_stage": 1.0,
+          "latency_fc_mask_stage": 1.0,
+          "latency_readout_stage": 1.0,
+          "latency_spill_stage": 4.0
+        }
+      },
+      "normalized_to_reference": {
+        "reference": "seed42",
+        "normalized": {
+          "compute": 1.0,
+          "movement": 1.0,
+          "storage": 1.0,
+          "latency": 1.0,
+          "energy": 1.0
+        },
+        "composite_cost": {
+          "balanced": 1.0,
+          "compute_heavy": 1.0,
+          "movement_heavy": 1.0,
+          "schedule_heavy": 1.0,
+          "storage_heavy": 1.0
+        },
+        "improvement_percent": {
+          "compute": 0.0,
+          "movement": 0.0,
+          "storage": 0.0,
+          "latency": 0.0,
+          "energy": 0.0,
+          "composite_balanced": 0.0,
+          "composite_compute_heavy": 0.0,
+          "composite_movement_heavy": 0.0,
+          "composite_schedule_heavy": 0.0,
+          "composite_storage_heavy": 0.0
+        },
+        "profiles": {
+          "balanced": {
+            "compute": 0.2,
+            "movement": 0.2,
+            "storage": 0.2,
+            "latency": 0.2,
+            "energy": 0.2
+          },
+          "compute_heavy": {
+            "compute": 0.5,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "movement_heavy": {
+            "compute": 0.125,
+            "movement": 0.5,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "schedule_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.5,
+            "energy": 0.125
+          },
+          "storage_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.5,
+            "latency": 0.125,
+            "energy": 0.125
+          }
+        }
+      }
+    }
+  ]
+}

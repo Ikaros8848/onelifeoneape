@@ -1,0 +1,23 @@
+{
+  "noise_seed": 1729,
+  "input_stage": "after FirmwareMNIST/mnist_to_64 preprocessing; model-input 64x64 normalized tensor",
+  "device": "cuda",
+  "models": {
+    "QAT": {
+      "checkpoint": "E:\\YSYX\\artifacts\\checkpoints\\mnist_scamp_qat.pt",
+      "clean_accuracy": 0.9736,
+      "clean_macro_f1": 0.9733934936570705
+    },
+    "13-tap seed 7": {
+      "checkpoint": "E:\\YSYX\\artifacts\\checkpoints\\mnist_scamp_offset13.deploy.pt",
+      "clean_accuracy": 0.9735,
+      "clean_macro_f1": 0.9733528924394095
+    },
+    "13-tap seed 42": {
+      "checkpoint": "E:\\YSYX\\artifacts\\checkpoints\\mnist_scamp_offset13_seed42.deploy.pt",
+      "clean_accuracy": 0.9738,
+      "clean_macro_f1": 0.9736153210999448
+    }
+  },
+  "rows": 36
+}

@@ -1,0 +1,11 @@
+method,accuracy,active_ops
+FP32,0.9708,1089536
+ternary_qat_baseline,0.9736,900945
+16tap_seed7,0.9736,816598
+15tap_seed7,0.9738,779539
+14tap_seed7,0.9746,751083
+13tap_seed7,0.9735,664554
+13tap_seed42,0.9738,664668
+12tap_seed7,0.9729,660553
+11tap_seed7,0.9725,603107
+10tap_seed7,0.9712,565998

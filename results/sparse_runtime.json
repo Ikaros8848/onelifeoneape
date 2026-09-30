@@ -1,0 +1,7 @@
+{
+  "samples_per_call": 1,
+  "repeats": 3,
+  "dense_masked_conv_seconds": 0.00023503333310751864,
+  "sparse_reference_conv_seconds": 0.0008276333319372497,
+  "measurement_boundary": "CPU Python/PyTorch reference runtime; not SCAMP latency"
+}

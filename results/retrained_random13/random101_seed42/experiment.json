@@ -1,0 +1,122 @@
+{
+  "method": "retrained_fixed_random_13_offset",
+  "mask_seed": 101,
+  "training_seed": 42,
+  "selected_offsets": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      3
+    ]
+  ],
+  "k": 13,
+  "training_config": {
+    "init_checkpoint": "artifacts/checkpoints/mnist_scamp_qat.pt",
+    "epochs": 4,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "base_lr": 0.001,
+    "gate_lr": 0.002,
+    "gate_lr_status": "not used; fixed gate logits frozen",
+    "threshold_ratio": 0.05,
+    "per_channel_scale": true,
+    "gate_lambda": 0.001,
+    "budget_lambda": 0.01,
+    "preprocessing": "existing FirmwareMNIST / mnist_to_64",
+    "data_augmentation": false
+  },
+  "device": "cuda",
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.11747795043786367,
+      "test": {
+        "loss": 0.10809435433745385,
+        "accuracy": 0.9698
+      },
+      "mask_seed": 101,
+      "training_seed": 42
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.09815956367651621,
+      "test": {
+        "loss": 0.10043035150244832,
+        "accuracy": 0.9709
+      },
+      "mask_seed": 101,
+      "training_seed": 42
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.09221977093021075,
+      "test": {
+        "loss": 0.09864464663602411,
+        "accuracy": 0.9723
+      },
+      "mask_seed": 101,
+      "training_seed": 42
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.08875410552024841,
+      "test": {
+        "loss": 0.09335327139813453,
+        "accuracy": 0.9729
+      },
+      "mask_seed": 101,
+      "training_seed": 42
+    }
+  ],
+  "checkpoint": "results\\retrained_random13\\random101_seed42\\checkpoint.pt",
+  "deploy_checkpoint": "results\\retrained_random13\\random101_seed42\\deploy.pt",
+  "test_samples_per_epoch": 10000,
+  "note": "software experiment; no SCAMP-5 hardware measurement"
+}

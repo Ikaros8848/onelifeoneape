@@ -1,0 +1,978 @@
+{
+  "qat": {
+    "retained_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "records": [
+      {
+        "offset_i": 0,
+        "offset_j": 0,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 1,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 2,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 7,
+        "zero_weight_terms": 0,
+        "active_operations": 65536,
+        "skipped_operations": 0,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 69632
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 3,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 8,
+        "zero_weight_terms": 2,
+        "active_operations": 57344,
+        "skipped_operations": 8192,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 61440
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 0,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 1,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 3,
+        "zero_weight_terms": 6,
+        "active_operations": 40960,
+        "skipped_operations": 24576,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 45056
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 2,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 5,
+        "zero_weight_terms": 3,
+        "active_operations": 53248,
+        "skipped_operations": 12288,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 57344
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 3,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 0,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 5,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 1,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 2,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 2,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 7,
+        "zero_weight_terms": 2,
+        "active_operations": 57344,
+        "skipped_operations": 8192,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 61440
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 3,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 7,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 0,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 1,
+        "positive_weight_terms": 11,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 2,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 3,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 5,
+        "zero_weight_terms": 3,
+        "active_operations": 53248,
+        "skipped_operations": 12288,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 57344
+      }
+    ],
+    "summary": {
+      "schedule_length": 16,
+      "active_operations": 888832,
+      "skipped_operations": 159744,
+      "candidate_operations": 1048576,
+      "conv_active_operations": 888832,
+      "conv_skipped_operations": 159744,
+      "fc_active_operations": 12113,
+      "fc_skipped_operations": 28847,
+      "total_active_operations": 900945,
+      "within_retained_offset_skipped_operations": 188591,
+      "removed_offset_candidate_operations": 0,
+      "total_logical_skipped_operations": 188591
+    }
+  },
+  "13tap_seed7": {
+    "retained_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "records": [
+      {
+        "offset_i": 0,
+        "offset_j": 0,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 1,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 2,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 2,
+        "active_operations": 57344,
+        "skipped_operations": 8192,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 61440
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 3,
+        "positive_weight_terms": 5,
+        "negative_weight_terms": 7,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 0,
+        "positive_weight_terms": 5,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 2,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 5,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 3,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 0,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 3,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 7,
+        "zero_weight_terms": 2,
+        "active_operations": 57344,
+        "skipped_operations": 8192,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 61440
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 0,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 1,
+        "positive_weight_terms": 11,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 2,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 3,
+        "positive_weight_terms": 3,
+        "negative_weight_terms": 2,
+        "zero_weight_terms": 11,
+        "active_operations": 20480,
+        "skipped_operations": 45056,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 24576
+      }
+    ],
+    "summary": {
+      "schedule_length": 13,
+      "active_operations": 655360,
+      "skipped_operations": 196608,
+      "candidate_operations": 851968,
+      "conv_active_operations": 655360,
+      "conv_skipped_operations": 196608,
+      "fc_active_operations": 9194,
+      "fc_skipped_operations": 31766,
+      "total_active_operations": 664554,
+      "within_retained_offset_skipped_operations": 228374,
+      "removed_offset_candidate_operations": 196608,
+      "total_logical_skipped_operations": 424982
+    }
+  },
+  "13tap_seed42": {
+    "retained_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "records": [
+      {
+        "offset_i": 0,
+        "offset_j": 0,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 1,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 5,
+        "zero_weight_terms": 3,
+        "active_operations": 53248,
+        "skipped_operations": 12288,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 57344
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 2,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 3,
+        "positive_weight_terms": 5,
+        "negative_weight_terms": 7,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 0,
+        "positive_weight_terms": 5,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 2,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 3,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 0,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 3,
+        "zero_weight_terms": 6,
+        "active_operations": 40960,
+        "skipped_operations": 24576,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 45056
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 3,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 7,
+        "zero_weight_terms": 2,
+        "active_operations": 57344,
+        "skipped_operations": 8192,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 61440
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 0,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 1,
+        "positive_weight_terms": 11,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 2,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 3,
+        "positive_weight_terms": 3,
+        "negative_weight_terms": 2,
+        "zero_weight_terms": 11,
+        "active_operations": 20480,
+        "skipped_operations": 45056,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 24576
+      }
+    ],
+    "summary": {
+      "schedule_length": 13,
+      "active_operations": 655360,
+      "skipped_operations": 196608,
+      "candidate_operations": 851968,
+      "conv_active_operations": 655360,
+      "conv_skipped_operations": 196608,
+      "fc_active_operations": 9308,
+      "fc_skipped_operations": 31652,
+      "total_active_operations": 664668,
+      "within_retained_offset_skipped_operations": 228260,
+      "removed_offset_candidate_operations": 196608,
+      "total_logical_skipped_operations": 424868
+    }
+  },
+  "14tap": {
+    "retained_offsets": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "records": [
+      {
+        "offset_i": 0,
+        "offset_j": 0,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 1,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 5,
+        "zero_weight_terms": 3,
+        "active_operations": 53248,
+        "skipped_operations": 12288,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 57344
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 2,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 0,
+        "offset_j": 3,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 8,
+        "zero_weight_terms": 2,
+        "active_operations": 57344,
+        "skipped_operations": 8192,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 61440
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 0,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 2,
+        "positive_weight_terms": 6,
+        "negative_weight_terms": 5,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      },
+      {
+        "offset_i": 1,
+        "offset_j": 3,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 2,
+        "active_operations": 57344,
+        "skipped_operations": 8192,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 61440
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 0,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 2,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 3,
+        "active_operations": 53248,
+        "skipped_operations": 12288,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 57344
+      },
+      {
+        "offset_i": 2,
+        "offset_j": 3,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 3,
+        "active_operations": 53248,
+        "skipped_operations": 12288,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 57344
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 0,
+        "positive_weight_terms": 8,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 4,
+        "active_operations": 49152,
+        "skipped_operations": 16384,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 53248
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 1,
+        "positive_weight_terms": 11,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 2,
+        "positive_weight_terms": 9,
+        "negative_weight_terms": 6,
+        "zero_weight_terms": 1,
+        "active_operations": 61440,
+        "skipped_operations": 4096,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 65536
+      },
+      {
+        "offset_i": 3,
+        "offset_j": 3,
+        "positive_weight_terms": 7,
+        "negative_weight_terms": 4,
+        "zero_weight_terms": 5,
+        "active_operations": 45056,
+        "skipped_operations": 20480,
+        "candidate_operations": 65536,
+        "local_movement_elements": 4096,
+        "register_local_operations": 49152
+      }
+    ],
+    "summary": {
+      "schedule_length": 14,
+      "active_operations": 741376,
+      "skipped_operations": 176128,
+      "candidate_operations": 917504,
+      "conv_active_operations": 741376,
+      "conv_skipped_operations": 176128,
+      "fc_active_operations": 9707,
+      "fc_skipped_operations": 31253,
+      "total_active_operations": 751083,
+      "within_retained_offset_skipped_operations": 207381,
+      "removed_offset_candidate_operations": 131072,
+      "total_logical_skipped_operations": 338453
+    }
+  }
+}

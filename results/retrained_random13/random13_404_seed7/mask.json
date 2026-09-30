@@ -1,0 +1,75 @@
+{
+  "method": "retrained_fixed_random_13_offset",
+  "mask_seed": 404,
+  "training_seed": 7,
+  "k": 13,
+  "selected_offsets": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      3,
+      2
+    ]
+  ],
+  "training_config": {
+    "init_checkpoint": "artifacts/checkpoints/mnist_scamp_qat.pt",
+    "epochs": 4,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "base_lr": 0.001,
+    "gate_lr": 0.002,
+    "gate_lr_status": "not used because fixed gate logits are frozen",
+    "threshold_ratio": 0.05,
+    "per_channel_scale": true,
+    "gate_lambda": 0.001,
+    "budget_lambda": 0.01,
+    "preprocessing": "existing FirmwareMNIST / mnist_to_64",
+    "data_augmentation": false
+  }
+}

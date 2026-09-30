@@ -1,0 +1,12 @@
+{
+  "max_absolute_error": 1.3113021850585938e-06,
+  "mean_absolute_error": 8.876121171397244e-09,
+  "prediction_agreement": 1.0,
+  "label": 7,
+  "dense_prediction": 7,
+  "sparse_prediction": 7,
+  "full_test_max_absolute_error": 2.86102294921875e-06,
+  "full_test_mean_absolute_error": 1.2179810035206628e-08,
+  "full_test_prediction_agreement": 1.0,
+  "full_test_samples": 10000
+}

@@ -1,0 +1,995 @@
+{
+  "reference": "qat",
+  "device": "cuda",
+  "samples": 10000,
+  "models": [
+    {
+      "name": "qat",
+      "kind": "qat",
+      "checkpoint": "artifacts/checkpoints/mnist_scamp_qat.pt",
+      "task": {
+        "accuracy": 0.9736,
+        "macro_precision": 0.9734704519067872,
+        "macro_recall": 0.9733563257426908,
+        "macro_f1": 0.9733934936570705,
+        "confusion_matrix": [
+          [
+            961,
+            0,
+            3,
+            0,
+            2,
+            3,
+            2,
+            2,
+            7,
+            0
+          ],
+          [
+            1,
+            1123,
+            4,
+            1,
+            1,
+            2,
+            2,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            1012,
+            4,
+            3,
+            0,
+            1,
+            4,
+            6,
+            0
+          ],
+          [
+            1,
+            0,
+            7,
+            979,
+            1,
+            7,
+            0,
+            3,
+            9,
+            3
+          ],
+          [
+            3,
+            1,
+            5,
+            0,
+            951,
+            1,
+            2,
+            3,
+            2,
+            14
+          ],
+          [
+            1,
+            1,
+            1,
+            9,
+            1,
+            867,
+            3,
+            2,
+            5,
+            2
+          ],
+          [
+            4,
+            2,
+            5,
+            0,
+            2,
+            4,
+            937,
+            0,
+            4,
+            0
+          ],
+          [
+            0,
+            4,
+            7,
+            1,
+            6,
+            2,
+            0,
+            1003,
+            1,
+            4
+          ],
+          [
+            6,
+            2,
+            5,
+            2,
+            4,
+            6,
+            0,
+            3,
+            938,
+            8
+          ],
+          [
+            1,
+            2,
+            4,
+            6,
+            15,
+            4,
+            0,
+            9,
+            3,
+            965
+          ]
+        ]
+      },
+      "hardware_proxy": {
+        "name": "qat",
+        "mapping": "ternary_scamp_proxy",
+        "parameters": 41242,
+        "positive_terms": 529692,
+        "negative_terms": 371253,
+        "active_terms": 900945,
+        "skipped_terms": 188591,
+        "dense_terms": 1089536,
+        "comparisons": 61440,
+        "retained_offsets": 16,
+        "total_offsets": 16,
+        "offset_route_depth": 15,
+        "fc_mask_passes": 20,
+        "external_movement_bits": 148880,
+        "local_movement_elements": 122880,
+        "feature_footprint_elements": 65536,
+        "analog_live_planes": 3,
+        "digital_live_planes": 4,
+        "register_pressure": 0.42857142857142855,
+        "register_excess": 0.0,
+        "latency_proxy": 65.0,
+        "energy_proxy": 1074160.3,
+        "assumptions": {
+          "analog_register_planes": 7,
+          "digital_register_planes": 13,
+          "input_bits": 8,
+          "activation_bits": 8,
+          "ternary_bits": 2,
+          "metadata_bits": 16,
+          "base_analog_live_planes": 3,
+          "base_digital_live_planes": 4,
+          "pool_schedule_depth": 4,
+          "energy_add": 1.0,
+          "energy_subtract": 1.0,
+          "energy_compare": 0.5,
+          "energy_local_move": 0.25,
+          "energy_external_bit": 0.01,
+          "energy_register_access": 0.1,
+          "energy_control_stage": 32.0,
+          "latency_tap_stage": 1.0,
+          "latency_shift_stage": 1.0,
+          "latency_pool_stage": 1.0,
+          "latency_fc_mask_stage": 1.0,
+          "latency_readout_stage": 1.0,
+          "latency_spill_stage": 4.0
+        }
+      },
+      "normalized_to_reference": {
+        "reference": "qat",
+        "normalized": {
+          "compute": 1.0,
+          "movement": 1.0,
+          "storage": 1.0,
+          "latency": 1.0,
+          "energy": 1.0
+        },
+        "composite_cost": {
+          "balanced": 1.0,
+          "compute_heavy": 1.0,
+          "movement_heavy": 1.0,
+          "schedule_heavy": 1.0,
+          "storage_heavy": 1.0
+        },
+        "improvement_percent": {
+          "compute": 0.0,
+          "movement": 0.0,
+          "storage": 0.0,
+          "latency": 0.0,
+          "energy": 0.0,
+          "composite_balanced": 0.0,
+          "composite_compute_heavy": 0.0,
+          "composite_movement_heavy": 0.0,
+          "composite_schedule_heavy": 0.0,
+          "composite_storage_heavy": 0.0
+        },
+        "profiles": {
+          "balanced": {
+            "compute": 0.2,
+            "movement": 0.2,
+            "storage": 0.2,
+            "latency": 0.2,
+            "energy": 0.2
+          },
+          "compute_heavy": {
+            "compute": 0.5,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "movement_heavy": {
+            "compute": 0.125,
+            "movement": 0.5,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "schedule_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.5,
+            "energy": 0.125
+          },
+          "storage_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.5,
+            "latency": 0.125,
+            "energy": 0.125
+          }
+        }
+      }
+    },
+    {
+      "name": "offset13",
+      "kind": "qat",
+      "checkpoint": "artifacts/checkpoints/mnist_scamp_offset13.deploy.pt",
+      "task": {
+        "accuracy": 0.9735,
+        "macro_precision": 0.9733956783434561,
+        "macro_recall": 0.9733359654990015,
+        "macro_f1": 0.9733528924394095,
+        "confusion_matrix": [
+          [
+            969,
+            0,
+            2,
+            0,
+            0,
+            2,
+            1,
+            1,
+            5,
+            0
+          ],
+          [
+            0,
+            1125,
+            4,
+            1,
+            1,
+            1,
+            3,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            6,
+            1000,
+            4,
+            6,
+            0,
+            3,
+            3,
+            8,
+            0
+          ],
+          [
+            2,
+            0,
+            4,
+            980,
+            0,
+            11,
+            0,
+            1,
+            7,
+            5
+          ],
+          [
+            3,
+            1,
+            5,
+            1,
+            952,
+            1,
+            2,
+            4,
+            1,
+            12
+          ],
+          [
+            1,
+            2,
+            1,
+            11,
+            0,
+            870,
+            3,
+            1,
+            2,
+            1
+          ],
+          [
+            6,
+            4,
+            1,
+            0,
+            2,
+            3,
+            937,
+            0,
+            5,
+            0
+          ],
+          [
+            0,
+            4,
+            8,
+            1,
+            7,
+            2,
+            0,
+            998,
+            2,
+            6
+          ],
+          [
+            6,
+            2,
+            4,
+            3,
+            4,
+            4,
+            2,
+            2,
+            938,
+            9
+          ],
+          [
+            2,
+            4,
+            2,
+            7,
+            12,
+            3,
+            0,
+            9,
+            4,
+            966
+          ]
+        ]
+      },
+      "hardware_proxy": {
+        "name": "offset13",
+        "mapping": "ternary_scamp_proxy",
+        "parameters": 41242,
+        "positive_terms": 384945,
+        "negative_terms": 279609,
+        "active_terms": 664554,
+        "skipped_terms": 424982,
+        "dense_terms": 1089536,
+        "comparisons": 61440,
+        "retained_offsets": 13,
+        "total_offsets": 16,
+        "offset_route_depth": 13,
+        "fc_mask_passes": 20,
+        "external_movement_bits": 148880,
+        "local_movement_elements": 114688,
+        "feature_footprint_elements": 65536,
+        "analog_live_planes": 3,
+        "digital_live_planes": 4,
+        "register_pressure": 0.42857142857142855,
+        "register_excess": 0.0,
+        "latency_proxy": 60.0,
+        "energy_proxy": 811103.0,
+        "assumptions": {
+          "analog_register_planes": 7,
+          "digital_register_planes": 13,
+          "input_bits": 8,
+          "activation_bits": 8,
+          "ternary_bits": 2,
+          "metadata_bits": 16,
+          "base_analog_live_planes": 3,
+          "base_digital_live_planes": 4,
+          "pool_schedule_depth": 4,
+          "energy_add": 1.0,
+          "energy_subtract": 1.0,
+          "energy_compare": 0.5,
+          "energy_local_move": 0.25,
+          "energy_external_bit": 0.01,
+          "energy_register_access": 0.1,
+          "energy_control_stage": 32.0,
+          "latency_tap_stage": 1.0,
+          "latency_shift_stage": 1.0,
+          "latency_pool_stage": 1.0,
+          "latency_fc_mask_stage": 1.0,
+          "latency_readout_stage": 1.0,
+          "latency_spill_stage": 4.0
+        }
+      },
+      "normalized_to_reference": {
+        "reference": "qat",
+        "normalized": {
+          "compute": 0.7376188335580973,
+          "movement": 0.96985575507801,
+          "storage": 1.0,
+          "latency": 0.9230769230769231,
+          "energy": 0.7551042428211133
+        },
+        "composite_cost": {
+          "balanced": 0.8771311509068288,
+          "compute_heavy": 0.8248140319010545,
+          "movement_heavy": 0.9119028774710217,
+          "schedule_heavy": 0.8943608154706142,
+          "storage_heavy": 0.9232069693167679
+        },
+        "improvement_percent": {
+          "compute": 26.238116644190267,
+          "movement": 3.014424492198997,
+          "storage": 0.0,
+          "latency": 7.692307692307687,
+          "energy": 24.489575717888666,
+          "composite_balanced": 12.28688490931712,
+          "composite_compute_heavy": 17.51859680989455,
+          "composite_movement_heavy": 8.809712252897828,
+          "composite_schedule_heavy": 10.56391845293858,
+          "composite_storage_heavy": 7.679303068323207
+        },
+        "profiles": {
+          "balanced": {
+            "compute": 0.2,
+            "movement": 0.2,
+            "storage": 0.2,
+            "latency": 0.2,
+            "energy": 0.2
+          },
+          "compute_heavy": {
+            "compute": 0.5,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "movement_heavy": {
+            "compute": 0.125,
+            "movement": 0.5,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "schedule_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.5,
+            "energy": 0.125
+          },
+          "storage_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.5,
+            "latency": 0.125,
+            "energy": 0.125
+          }
+        }
+      }
+    },
+    {
+      "name": "offset14",
+      "kind": "qat",
+      "checkpoint": "artifacts/checkpoints/mnist_scamp_offset_gated.deploy.pt",
+      "task": {
+        "accuracy": 0.9746,
+        "macro_precision": 0.9744198727308919,
+        "macro_recall": 0.9744972584738157,
+        "macro_f1": 0.9744397978157634,
+        "confusion_matrix": [
+          [
+            967,
+            0,
+            2,
+            0,
+            0,
+            3,
+            2,
+            1,
+            5,
+            0
+          ],
+          [
+            2,
+            1123,
+            4,
+            1,
+            1,
+            2,
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            1001,
+            9,
+            5,
+            0,
+            1,
+            3,
+            8,
+            0
+          ],
+          [
+            1,
+            0,
+            5,
+            984,
+            1,
+            9,
+            0,
+            1,
+            4,
+            5
+          ],
+          [
+            4,
+            0,
+            4,
+            1,
+            953,
+            1,
+            2,
+            4,
+            1,
+            12
+          ],
+          [
+            1,
+            2,
+            0,
+            9,
+            0,
+            873,
+            2,
+            1,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            1,
+            0,
+            2,
+            5,
+            939,
+            0,
+            4,
+            0
+          ],
+          [
+            0,
+            5,
+            8,
+            2,
+            7,
+            2,
+            0,
+            999,
+            1,
+            4
+          ],
+          [
+            6,
+            1,
+            5,
+            3,
+            4,
+            6,
+            2,
+            3,
+            940,
+            4
+          ],
+          [
+            2,
+            2,
+            3,
+            6,
+            10,
+            6,
+            0,
+            9,
+            4,
+            967
+          ]
+        ]
+      },
+      "hardware_proxy": {
+        "name": "offset14",
+        "mapping": "ternary_scamp_proxy",
+        "parameters": 41242,
+        "positive_terms": 434262,
+        "negative_terms": 316821,
+        "active_terms": 751083,
+        "skipped_terms": 338453,
+        "dense_terms": 1089536,
+        "comparisons": 61440,
+        "retained_offsets": 14,
+        "total_offsets": 16,
+        "offset_route_depth": 13,
+        "fc_mask_passes": 20,
+        "external_movement_bits": 148880,
+        "local_movement_elements": 114688,
+        "feature_footprint_elements": 65536,
+        "analog_live_planes": 3,
+        "digital_live_planes": 4,
+        "register_pressure": 0.42857142857142855,
+        "register_excess": 0.0,
+        "latency_proxy": 61.0,
+        "energy_proxy": 906316.9,
+        "assumptions": {
+          "analog_register_planes": 7,
+          "digital_register_planes": 13,
+          "input_bits": 8,
+          "activation_bits": 8,
+          "ternary_bits": 2,
+          "metadata_bits": 16,
+          "base_analog_live_planes": 3,
+          "base_digital_live_planes": 4,
+          "pool_schedule_depth": 4,
+          "energy_add": 1.0,
+          "energy_subtract": 1.0,
+          "energy_compare": 0.5,
+          "energy_local_move": 0.25,
+          "energy_external_bit": 0.01,
+          "energy_register_access": 0.1,
+          "energy_control_stage": 32.0,
+          "latency_tap_stage": 1.0,
+          "latency_shift_stage": 1.0,
+          "latency_pool_stage": 1.0,
+          "latency_fc_mask_stage": 1.0,
+          "latency_readout_stage": 1.0,
+          "latency_spill_stage": 4.0
+        }
+      },
+      "normalized_to_reference": {
+        "reference": "qat",
+        "normalized": {
+          "compute": 0.8336613222782745,
+          "movement": 0.96985575507801,
+          "storage": 1.0,
+          "latency": 0.9384615384615385,
+          "energy": 0.8437445509762369
+        },
+        "composite_cost": {
+          "balanced": 0.917144633358812,
+          "compute_heavy": 0.8858383917036105,
+          "movement_heavy": 0.9369113040035113,
+          "schedule_heavy": 0.9251384727723344,
+          "storage_heavy": 0.9482153958492575
+        },
+        "improvement_percent": {
+          "compute": 16.63386777217255,
+          "movement": 3.014424492198997,
+          "storage": 0.0,
+          "latency": 6.153846153846154,
+          "energy": 15.625544902376308,
+          "composite_balanced": 8.285536664118798,
+          "composite_compute_heavy": 11.416160829638955,
+          "composite_movement_heavy": 6.30886959964887,
+          "composite_schedule_heavy": 7.486152722766559,
+          "composite_storage_heavy": 5.178460415074248
+        },
+        "profiles": {
+          "balanced": {
+            "compute": 0.2,
+            "movement": 0.2,
+            "storage": 0.2,
+            "latency": 0.2,
+            "energy": 0.2
+          },
+          "compute_heavy": {
+            "compute": 0.5,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "movement_heavy": {
+            "compute": 0.125,
+            "movement": 0.5,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "schedule_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.5,
+            "energy": 0.125
+          },
+          "storage_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.5,
+            "latency": 0.125,
+            "energy": 0.125
+          }
+        }
+      }
+    },
+    {
+      "name": "offset15",
+      "kind": "qat",
+      "checkpoint": "artifacts/checkpoints/mnist_scamp_offset15.deploy.pt",
+      "task": {
+        "accuracy": 0.9738,
+        "macro_precision": 0.9737009803410892,
+        "macro_recall": 0.9736138084245137,
+        "macro_f1": 0.9736344702311156,
+        "confusion_matrix": [
+          [
+            964,
+            0,
+            3,
+            0,
+            0,
+            3,
+            3,
+            2,
+            5,
+            0
+          ],
+          [
+            1,
+            1124,
+            3,
+            1,
+            1,
+            2,
+            3,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            6,
+            1001,
+            8,
+            4,
+            0,
+            3,
+            4,
+            6,
+            0
+          ],
+          [
+            1,
+            0,
+            4,
+            985,
+            0,
+            12,
+            0,
+            1,
+            5,
+            2
+          ],
+          [
+            3,
+            0,
+            5,
+            0,
+            956,
+            1,
+            1,
+            2,
+            1,
+            13
+          ],
+          [
+            1,
+            3,
+            1,
+            9,
+            1,
+            869,
+            2,
+            2,
+            2,
+            2
+          ],
+          [
+            5,
+            4,
+            3,
+            0,
+            1,
+            3,
+            939,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            6,
+            8,
+            1,
+            5,
+            2,
+            0,
+            1002,
+            2,
+            2
+          ],
+          [
+            6,
+            2,
+            4,
+            3,
+            5,
+            7,
+            3,
+            4,
+            934,
+            6
+          ],
+          [
+            2,
+            4,
+            5,
+            6,
+            11,
+            4,
+            0,
+            10,
+            3,
+            964
+          ]
+        ]
+      },
+      "hardware_proxy": {
+        "name": "offset15",
+        "mapping": "ternary_scamp_proxy",
+        "parameters": 41242,
+        "positive_terms": 446604,
+        "negative_terms": 332935,
+        "active_terms": 779539,
+        "skipped_terms": 309997,
+        "dense_terms": 1089536,
+        "comparisons": 61440,
+        "retained_offsets": 15,
+        "total_offsets": 16,
+        "offset_route_depth": 14,
+        "fc_mask_passes": 20,
+        "external_movement_bits": 148880,
+        "local_movement_elements": 118784,
+        "feature_footprint_elements": 65536,
+        "analog_live_planes": 3,
+        "digital_live_planes": 4,
+        "register_pressure": 0.42857142857142855,
+        "register_excess": 0.0,
+        "latency_proxy": 63.0,
+        "energy_proxy": 939116.1000000001,
+        "assumptions": {
+          "analog_register_planes": 7,
+          "digital_register_planes": 13,
+          "input_bits": 8,
+          "activation_bits": 8,
+          "ternary_bits": 2,
+          "metadata_bits": 16,
+          "base_analog_live_planes": 3,
+          "base_digital_live_planes": 4,
+          "pool_schedule_depth": 4,
+          "energy_add": 1.0,
+          "energy_subtract": 1.0,
+          "energy_compare": 0.5,
+          "energy_local_move": 0.25,
+          "energy_external_bit": 0.01,
+          "energy_register_access": 0.1,
+          "energy_control_stage": 32.0,
+          "latency_tap_stage": 1.0,
+          "latency_shift_stage": 1.0,
+          "latency_pool_stage": 1.0,
+          "latency_fc_mask_stage": 1.0,
+          "latency_readout_stage": 1.0,
+          "latency_spill_stage": 4.0
+        }
+      },
+      "normalized_to_reference": {
+        "reference": "qat",
+        "normalized": {
+          "compute": 0.8652459362114224,
+          "movement": 0.984927877539005,
+          "storage": 1.0,
+          "latency": 0.9692307692307692,
+          "energy": 0.8742792858756743
+        },
+        "composite_cost": {
+          "balanced": 0.9387367737713742,
+          "compute_heavy": 0.9111777096863922,
+          "movement_heavy": 0.9560584376842357,
+          "schedule_heavy": 0.9501720220686474,
+          "storage_heavy": 0.9617104836071089
+        },
+        "improvement_percent": {
+          "compute": 13.475406378857757,
+          "movement": 1.5072122460994986,
+          "storage": 0.0,
+          "latency": 3.076923076923077,
+          "energy": 12.572071412432573,
+          "composite_balanced": 6.126322622862579,
+          "composite_compute_heavy": 8.882229031360778,
+          "composite_movement_heavy": 4.39415623157643,
+          "composite_schedule_heavy": 4.982797793135263,
+          "composite_storage_heavy": 3.828951639289113
+        },
+        "profiles": {
+          "balanced": {
+            "compute": 0.2,
+            "movement": 0.2,
+            "storage": 0.2,
+            "latency": 0.2,
+            "energy": 0.2
+          },
+          "compute_heavy": {
+            "compute": 0.5,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "movement_heavy": {
+            "compute": 0.125,
+            "movement": 0.5,
+            "storage": 0.125,
+            "latency": 0.125,
+            "energy": 0.125
+          },
+          "schedule_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.125,
+            "latency": 0.5,
+            "energy": 0.125
+          },
+          "storage_heavy": {
+            "compute": 0.125,
+            "movement": 0.125,
+            "storage": 0.5,
+            "latency": 0.125,
+            "energy": 0.125
+          }
+        }
+      }
+    }
+  ]
+}

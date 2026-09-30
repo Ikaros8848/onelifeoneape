@@ -1,0 +1,22 @@
+{
+  "mask_k_all_13": true,
+  "parameter_counts_all_41242": true,
+  "test_samples_all_10000": true,
+  "preprocessing_same": true,
+  "training_config_common": {
+    "init_checkpoint": "artifacts/checkpoints/mnist_scamp_qat.pt",
+    "epochs": 4,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "base_lr": 0.001,
+    "gate_lr": 0.002,
+    "threshold_ratio": 0.05,
+    "per_channel_scale": true,
+    "gate_lambda": 0.001,
+    "budget_lambda": 0.01,
+    "preprocessing": "existing FirmwareMNIST / mnist_to_64",
+    "data_augmentation": false
+  },
+  "device": "cuda",
+  "pc_execution_note": "actual inference uses dense F.conv2d; operation metrics are logical schedule counts"
+}

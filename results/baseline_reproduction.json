@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-30",
+  "git_commit": "0ea21674bfcdecfc2131db55db58bc90a539d61a",
+  "dataset": "torchvision MNIST test split",
+  "samples": 10000,
+  "fp32": {
+    "checkpoint": "artifacts/checkpoints/mnist_scamp_software.pt",
+    "correct": 9708,
+    "accuracy": 0.9708,
+    "parameters": 41242
+  },
+  "ternary_qat": {
+    "checkpoint": "artifacts/checkpoints/mnist_scamp_qat.pt",
+    "correct": 9736,
+    "accuracy": 0.9736,
+    "macro_precision": 0.973470,
+    "macro_recall": 0.973356,
+    "macro_f1": 0.973393,
+    "threshold_ratio": 0.05,
+    "per_channel_scale": true,
+    "activation_limit": null,
+    "accumulator_limit": null,
+    "weights": {
+      "conv": {"positive": 128, "zero": 39, "negative": 89},
+      "fc": {"positive": 5404, "zero": 28847, "negative": 6709}
+    },
+    "operations": {
+      "dense_candidate_terms": 1089536,
+      "positive_add_terms": 529692,
+      "negative_subtract_terms": 371253,
+      "active_terms": 900945,
+      "skipped_terms": 188591,
+      "skip_fraction": 0.1730929
+    }
+  },
+  "naive_post_training_ternary_accuracy": 0.6397,
+  "measurement_boundary": "Accuracy and tensor statistics are software measurements. Operation counts are analytical scalar counts, not SCAMP-5 cycles."
+}
